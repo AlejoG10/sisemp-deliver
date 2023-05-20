@@ -25,9 +25,9 @@ export default function FormLabelInput({
           onChange={handleChange}
           className="bg-white border rounded-md px-2 py-[6px] outline-orange-500"
         >
-          <option>N/A</option>
-          {JSON.parse(sessionStorage.getItem("products")).map((product) => (
-            <option key={product.id}>{product.nombre}</option>
+          <option></option>
+          {value.map((item, i) => (
+            <option key={i}>{item || item.nombre}</option>
           ))}
         </select>
       )}

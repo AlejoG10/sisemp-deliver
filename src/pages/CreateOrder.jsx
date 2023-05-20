@@ -17,8 +17,14 @@ export default function CreateOrder() {
   const [fechaEntrega, setFechaEntrega] = useState("");
   const [horaEntrega, setHoraEntrega] = useState("");
   const [products, setProducts] = useState([]);
-  const [productos, setProductos] = useState([]);
-  const [cantidades, setCantidades] = useState([]);
+  const [productos, setProductos] = useState([
+    "N/A",
+    "N/A",
+    "N/A",
+    "N/A",
+    "N/A",
+  ]);
+  const [cantidades, setCantidades] = useState([0, 0, 0, 0, 0]);
   const [msg, setMsg] = useState("");
 
   const handleCreate = (e) => {
@@ -69,7 +75,7 @@ export default function CreateOrder() {
       />
 
       {/* preview detail */}
-      {(proveedor || fechaEntrega || horaEntrega || products.length > 0) && (
+      {products.length > 0 && (
         <>
           <PageTitle title={`Previsualización - Pedido ${proveedor}`} />
           <div className="flex items-center gap-x-10 mb-10 border p-4 rounded-md w-full">
@@ -217,9 +223,11 @@ export default function CreateOrder() {
                   <FormLabelInput
                     label="Producto"
                     inputType="select"
+                    value={JSON.parse(sessionStorage.getItem("products"))}
                     handleChange={(e) => {
-                      const producto = e.target.value;
-                      setProductos((prev) => [...prev, producto]);
+                      const newProductos = [...productos];
+                      newProductos[products.length - 1] = e.target.value;
+                      setProductos(newProductos);
                     }}
                   />
                 </div>
@@ -230,15 +238,18 @@ export default function CreateOrder() {
                     label="Cantidad"
                     inputType="number"
                     handleChange={(e) => {
-                      const cantidad = e.target.value;
-                      setCantidades((prev) => [...prev, cantidad]);
+                      const newCantidades = [...cantidades];
+                      newCantidades[products.length - 1] = e.target.value;
+                      setCantidades(newCantidades);
                     }}
                   />
                 </div>
               </div>
             ))
           ) : (
-            <h1 className="text-neutral-800 text-lg">Agrega productos!</h1>
+            <h1 className="text-neutral-800">
+              Previsualiza tu pedido agregando productos!
+            </h1>
           )}
         </div>
 

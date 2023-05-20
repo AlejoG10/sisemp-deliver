@@ -2,7 +2,8 @@ import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Breadcrumb from "../components/Breadcrumb";
 import PageTitle from "../components/PageTitle";
-import { AiFillCheckCircle, AiFillWarning } from "react-icons/ai";
+import ActionBtn from "../components/ActionBtn";
+import { AiFillCheckCircle, AiFillFilter, AiFillWarning } from "react-icons/ai";
 import { RiErrorWarningFill } from "react-icons/ri";
 
 export default function ProductDetail() {
@@ -33,20 +34,20 @@ export default function ProductDetail() {
       />
 
       <div className="border rounded-lg p-5">
-        <div className="flex justify-between">
+        <div className="flex justify-between items-center">
           <PageTitle title={product?.nombre} />
-          <button
-            className="p-2 rounded-md bg-orange-500 hover:bg-orange-600 text-white h-fit"
-            onClick={() =>
+
+          <ActionBtn
+            styles="text-orange-500"
+            icon={<AiFillFilter />}
+            tooltip="Productos similares"
+            handleClick={() =>
               navigate(
                 `/productos?search=${product?.categoria.toLocaleLowerCase()}`
               )
             }
-          >
-            Ver productos similares
-          </button>
+          />
         </div>
-
         <div className="flex items-center gap-x-10">
           <img
             src={product?.img}

@@ -4,8 +4,10 @@ import Breadcrumb from "../components/Breadcrumb";
 import PageTitle from "../components/PageTitle";
 import ActionBtn from "../components/ActionBtn";
 import CustomTable from "../components/CustomTable";
+import { AiFillCheckCircle, AiFillWarning, AiFillFilter } from "react-icons/ai";
 import { BsFillPlusCircleFill, BsFillInfoCircleFill } from "react-icons/bs";
 import { FaTrash } from "react-icons/fa";
+import { RiErrorWarningFill } from "react-icons/ri";
 
 export default function Products() {
   const navigate = useNavigate();
@@ -15,6 +17,8 @@ export default function Products() {
     JSON.parse(sessionStorage.getItem("products"))
   );
   const [search, setSearch] = useState("");
+  const [showFilters, setShowFilters] = useState(false);
+  const [filter, setFilter] = useState(null);
 
   const removeProduct = () => {
     const selected = sessionStorage.getItem("selected");
@@ -60,13 +64,48 @@ export default function Products() {
 
         {/* filters */}
         <div className="flex justify-between items-center mb-4">
-          <input
-            type="text"
-            value={search}
-            placeholder="Buscar un producto o categoría"
-            className="w-1/2 p-2 outline-2 outline-orange-500 border rounded-md text-neutral-800"
-            onChange={(e) => setSearch(e.target.value)}
-          />
+          <div className="flex items-center gap-x-5">
+            <input
+              type="text"
+              value={search}
+              placeholder="Buscar un producto o categoría"
+              className="w-[350px] p-2 outline-2 outline-orange-500 border rounded-md text-neutral-800"
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <ActionBtn
+              styles="text-blue-500"
+              tooltip="Ver / Ocultar Filtros"
+              handleClick={() => {
+                setShowFilters((prev) => !prev);
+                setFilter(null);
+              }}
+              icon={<AiFillFilter />}
+            />
+          </div>
+
+          {showFilters && (
+            <div className="flex items-center gap-x-5">
+              <ActionBtn
+                styles="text-red-500"
+                tooltip="Productos sin stock"
+                handleClick={() => setFilter(0)}
+                icon={<RiErrorWarningFill />}
+              />
+              <ActionBtn
+                styles="text-orange-500"
+                tooltip="Productos poco stock"
+                handleClick={() => setFilter(1)}
+                icon={<AiFillWarning />}
+              />
+              <ActionBtn
+                styles="text-green-500"
+                tooltip="Productos disponibles"
+                handleClick={() => setFilter(2)}
+                icon={<AiFillCheckCircle />}
+              />
+            </div>
+          )}
+
           <div className="flex items-center gap-x-5">
             <ActionBtn
               styles="text-green-500"
@@ -100,7 +139,16 @@ export default function Products() {
             "Disponibilidad",
           ]}
           products={
-            search === ""
+            filter !== null
+              ? products.filter((product) => {
+                  if (filter === 0) return product.disponibilidad === 0;
+                  if (filter === 1)
+                    return (
+                      product.disponibilidad > 0 && product.disponibilidad < 10
+                    );
+                  if (filter === 2) return product.disponibilidad >= 10;
+                })
+              : search === ""
               ? products
               : products.filter(
                   (producto) =>

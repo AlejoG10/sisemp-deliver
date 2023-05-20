@@ -104,7 +104,7 @@ const TableRowOrder = ({
 
 export default function CustomTable({ cols, products, orders }) {
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex flex-col w-full overflow-x-scroll">
       <Table
         striped
         bordered

@@ -4,6 +4,7 @@ import PageTitle from "../components/PageTitle";
 import FormLabelInput from "../components/FormLabelInput";
 import { AiFillCheckCircle, AiFillWarning } from "react-icons/ai";
 import { RiErrorWarningFill } from "react-icons/ri";
+import { categorias } from "../data";
 
 export default function CreateProduct() {
   const [img, setImg] = useState("");
@@ -77,8 +78,10 @@ export default function CreateProduct() {
               </div>
 
               {/* disponibilidad */}
-              <div
-                className={`flex justify-center items-center gap-x-4
+              <div className="flex flex-col">
+                <h1 className="text-xl font-medium mb-2">Disponibilidad</h1>
+                <div
+                  className={`flex justify-center items-center gap-x-4
                   ${Number(disponibilidad) === 0 && "text-red-500"} 
                   ${
                     Number(disponibilidad) > 0 &&
@@ -86,25 +89,27 @@ export default function CreateProduct() {
                     "text-orange-500"
                   }
                   ${Number(disponibilidad) >= 10 && "text-green-500"}`}
-              >
-                {Number(disponibilidad) === 0 && (
-                  <>
-                    <RiErrorWarningFill size={20} />
-                    No disponible ({disponibilidad} und.)
-                  </>
-                )}
-                {Number(disponibilidad) > 0 && Number(disponibilidad) < 10 && (
-                  <>
-                    <AiFillWarning size={20} />
-                    Menos de 10 ({disponibilidad} und.)
-                  </>
-                )}
-                {Number(disponibilidad) >= 10 && (
-                  <>
-                    <AiFillCheckCircle size={20} />
-                    Disponible ({disponibilidad} und.)
-                  </>
-                )}
+                >
+                  {Number(disponibilidad) === 0 && (
+                    <>
+                      <RiErrorWarningFill size={20} />
+                      No disponible ({disponibilidad} und.)
+                    </>
+                  )}
+                  {Number(disponibilidad) > 0 &&
+                    Number(disponibilidad) < 10 && (
+                      <>
+                        <AiFillWarning size={20} />
+                        Menos de 10 ({disponibilidad} und.)
+                      </>
+                    )}
+                  {Number(disponibilidad) >= 10 && (
+                    <>
+                      <AiFillCheckCircle size={20} />
+                      Disponible ({disponibilidad} und.)
+                    </>
+                  )}
+                </div>
               </div>
 
               {/* categoría */}
@@ -143,8 +148,8 @@ export default function CreateProduct() {
           <div className="w-1/2">
             <FormLabelInput
               label="Categoría del Producto"
-              inputType="text"
-              value={categoria}
+              inputType="select"
+              value={categorias}
               handleChange={(e) => setCategoria(e.target.value)}
             />
           </div>
