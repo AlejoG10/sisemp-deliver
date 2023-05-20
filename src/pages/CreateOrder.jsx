@@ -7,6 +7,11 @@ import { MdRemoveCircle } from "react-icons/md";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 
 export default function CreateOrder() {
+  const allProducts = JSON.parse(sessionStorage.getItem("products"));
+  const allProductsArr = [];
+  for (let i = 0; i < allProducts.length; i++)
+    allProductsArr.push(allProducts[i].nombre);
+
   const [proveedor, setProveedor] = useState("");
   const [fechaSolicitud, setFechaSolicitud] = useState(
     new Date().toLocaleDateString()
@@ -223,7 +228,7 @@ export default function CreateOrder() {
                   <FormLabelInput
                     label="Producto"
                     inputType="select"
-                    value={JSON.parse(sessionStorage.getItem("products"))}
+                    value={allProductsArr}
                     handleChange={(e) => {
                       const newProductos = [...productos];
                       newProductos[products.length - 1] = e.target.value;
