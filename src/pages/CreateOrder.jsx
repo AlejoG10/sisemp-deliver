@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Breadcrumb from "../components/Breadcrumb";
 import PageTitle from "../components/PageTitle";
 import FormLabelInput from "../components/FormLabelInput";
 import ActionBtn from "../components/ActionBtn";
 import { MdRemoveCircle } from "react-icons/md";
 import { BsFillPlusCircleFill } from "react-icons/bs";
+import { PROVEEDORES, genId } from "../data";
 
 export default function CreateOrder() {
   const allProducts = JSON.parse(sessionStorage.getItem("products"));
@@ -22,6 +23,7 @@ export default function CreateOrder() {
   const [fechaEntrega, setFechaEntrega] = useState("");
   const [horaEntrega, setHoraEntrega] = useState("");
   const [products, setProducts] = useState([]);
+  const [productsByProv, setProductsByProv] = useState([]);
   const [productos, setProductos] = useState([
     "N/A",
     "N/A",
@@ -30,6 +32,7 @@ export default function CreateOrder() {
     "N/A",
   ]);
   const [cantidades, setCantidades] = useState([0, 0, 0, 0, 0]);
+  const [orderId] = useState(genId());
   const [msg, setMsg] = useState("");
 
   const handleCreate = (e) => {
@@ -38,7 +41,7 @@ export default function CreateOrder() {
     const prevOrders = JSON.parse(sessionStorage.getItem("orders"));
 
     const newOrder = {
-      id: prevOrders.length,
+      id: orderId,
       proveedor,
       fechaSolicitud,
       horaSolicitud,
@@ -59,6 +62,19 @@ export default function CreateOrder() {
     setCantidades([]);
     setMsg("Pedido creado exitosamente!");
   };
+
+  useEffect(() => {
+    const jsonP = JSON.parse(sessionStorage.getItem("proveedores")).filter(
+      (prov) => prov.nombre === proveedor
+    )[0]?.productos;
+
+    const arrP = [];
+    for (let i = 0; i < jsonP?.length; i++) {
+      arrP.push(jsonP[i]?.nombre);
+    }
+
+    setProductsByProv(arrP);
+  }, [proveedor]);
 
   return (
     <div className="p-8 sm:p-12 w-screen">
@@ -88,7 +104,7 @@ export default function CreateOrder() {
               {/* id */}
               <div className="flex items-center gap-x-3">
                 <h1 className="text-lg font-medium">ID del Pedido:</h1>
-                {JSON.parse(sessionStorage.getItem("orders")).length}
+                {orderId}
               </div>
 
               {/* solicitud y entrega */}
@@ -148,8 +164,8 @@ export default function CreateOrder() {
         {/* proveedor */}
         <FormLabelInput
           label="Proveedor"
-          inputType="text"
-          value={proveedor}
+          inputType="select"
+          value={PROVEEDORES}
           handleChange={(e) => setProveedor(e.target.value)}
         />
 
@@ -228,7 +244,7 @@ export default function CreateOrder() {
                   <FormLabelInput
                     label="Producto"
                     inputType="select"
-                    value={allProductsArr}
+                    value={productsByProv}
                     handleChange={(e) => {
                       const newProductos = [...productos];
                       newProductos[products.length - 1] = e.target.value;

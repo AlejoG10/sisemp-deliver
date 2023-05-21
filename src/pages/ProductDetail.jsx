@@ -14,6 +14,10 @@ export default function ProductDetail() {
     (product) => product.id.toString() === productoId.toString()
   )[0];
 
+  const proveedor = JSON.parse(sessionStorage.getItem("proveedores")).filter(
+    (proveedor) => proveedor.id.toString() === product.proveedorId.toString()
+  )[0];
+
   return (
     <div className="p-8 sm:p-12 w-screen cursor-default">
       <Breadcrumb
@@ -49,12 +53,20 @@ export default function ProductDetail() {
           />
         </div>
         <div className="flex items-center gap-x-10">
+          {/* img */}
           <img
             src={product?.img}
             alt={product?.nombre}
             className="w-[150px] aspect-square"
           />
+
           <div className="flex items-center gap-x-16">
+            {/* proveedor */}
+            <div className="flex flex-col">
+              <h1 className="text-xl font-medium mb-2">Proveedor</h1>
+              <p>{proveedor?.nombre}</p>
+            </div>
+
             {/* precio */}
             <div className="flex flex-col">
               <h1 className="text-xl font-medium mb-2">Precio</h1>

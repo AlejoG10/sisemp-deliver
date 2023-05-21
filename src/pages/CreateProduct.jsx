@@ -4,14 +4,16 @@ import PageTitle from "../components/PageTitle";
 import FormLabelInput from "../components/FormLabelInput";
 import { AiFillCheckCircle, AiFillWarning } from "react-icons/ai";
 import { RiErrorWarningFill } from "react-icons/ri";
-import { categorias } from "../data";
+import { PROVEEDORES, CATEGORIAS, genId } from "../data";
 
 export default function CreateProduct() {
   const [img, setImg] = useState("");
+  const [nombreProveedor, setNombreProveedor] = useState("N/A");
   const [nombre, setNombre] = useState("");
-  const [categoria, setCategoria] = useState("");
+  const [categoria, setCategoria] = useState("N/A");
   const [precio, setPrecio] = useState("");
   const [disponibilidad, setDisponibilidad] = useState("");
+  const [productoId] = useState(genId());
   const [msg, setMsg] = useState("");
 
   const handleCreate = (e) => {
@@ -19,8 +21,13 @@ export default function CreateProduct() {
 
     const prevProducts = JSON.parse(sessionStorage.getItem("products"));
 
+    const proveedores = JSON.parse(sessionStorage.getItem("proveedores"));
+
     const newProduct = {
-      id: prevProducts.length,
+      id: productoId,
+      proveedorId: proveedores.filter(
+        (prov) => prov.nombre === nombreProveedor
+      )[0].id,
       img,
       nombre,
       categoria,
@@ -31,9 +38,17 @@ export default function CreateProduct() {
     prevProducts.unshift(newProduct);
     sessionStorage.setItem("products", JSON.stringify(prevProducts));
 
+    proveedores
+      .filter((prov) => prov.nombre === nombreProveedor)[0]
+      .productos.push(newProduct);
+    const newProveedores = [...proveedores];
+
+    sessionStorage.setItem("proveedores", JSON.stringify(newProveedores));
+
     setImg("");
+    setNombreProveedor("N/A");
     setNombre("");
-    setCategoria("");
+    setCategoria("N/A");
     setPrecio("");
     setDisponibilidad("");
     setMsg("Producto creado exitosamente!");
@@ -59,12 +74,23 @@ export default function CreateProduct() {
       />
 
       {/* preview detail */}
-      {(img || nombre || categoria || precio || disponibilidad) && (
+      {(img ||
+        nombreProveedor !== "N/A" ||
+        nombre ||
+        categoria !== "N/A" ||
+        precio ||
+        disponibilidad) && (
         <>
           <PageTitle title={`Previsualización - ${nombre}`} />
           <div className="flex items-center gap-x-10 mb-10 border p-4 rounded-md">
             <img src={img} alt={nombre} className="w-[150px] aspect-square" />
             <div className="flex items-center gap-x-16">
+              {/* proveedor */}
+              <div className="flex flex-col">
+                <h1 className="text-xl font-medium mb-2">Proveedor</h1>
+                <p>{nombreProveedor}</p>
+              </div>
+
               {/* precio */}
               <div className="flex flex-col">
                 <h1 className="text-xl font-medium mb-2">Precio</h1>
@@ -144,20 +170,30 @@ export default function CreateProduct() {
             />
           </div>
 
-          {/* categoría */}
+          {/* proveedor id */}
           <div className="w-1/2">
             <FormLabelInput
-              label="Categoría del Producto"
+              label="Proveedor"
               inputType="select"
-              value={categorias}
-              handleChange={(e) => setCategoria(e.target.value)}
+              value={PROVEEDORES}
+              handleChange={(e) => setNombreProveedor(e.target.value)}
             />
           </div>
         </div>
 
         <div className="flex items-center gap-x-16 w-full">
+          {/* categoría */}
+          <div className="w-1/3">
+            <FormLabelInput
+              label="Categoría del Producto"
+              inputType="select"
+              value={CATEGORIAS}
+              handleChange={(e) => setCategoria(e.target.value)}
+            />
+          </div>
+
           {/* precio */}
-          <div className="w-1/2">
+          <div className="w-1/3">
             <FormLabelInput
               label="Precio"
               inputType="number"
@@ -167,7 +203,7 @@ export default function CreateProduct() {
           </div>
 
           {/* disponibilidad */}
-          <div className="w-1/2">
+          <div className="w-1/3">
             <FormLabelInput
               label="Disponibilidad"
               inputType="number"

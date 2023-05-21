@@ -9,6 +9,7 @@ const TableHead = ({ head }) => {
 
 const TableRowProduct = ({
   id,
+  proveedorId,
   img,
   nombre,
   categoria,
@@ -33,6 +34,7 @@ const TableRowProduct = ({
       <td ref={idRef} className="p-4">
         {id}
       </td>
+      <td className="p-4">{proveedorId}</td>
       <td>
         <div className="flex justify-center items-center">
           <img src={img} alt={nombre} className="w-[50px]" />
@@ -89,6 +91,7 @@ const TableRowOrder = ({
   horaSolicitud,
   fechaEntrega,
   horaEntrega,
+  entregado,
 }) => {
   return (
     <tr className="cursor-default">
@@ -98,6 +101,9 @@ const TableRowOrder = ({
       <td className="p-4">{horaSolicitud}</td>
       <td className="p-4">{fechaEntrega}</td>
       <td className="p-4">{horaEntrega}</td>
+      <td className="p-4">
+        <input type="checkbox" checked={entregado} />
+      </td>
     </tr>
   );
 };

@@ -58,6 +58,7 @@ export default function Orders() {
             "Hora de Solicitud",
             "Fecha de Entrega",
             "Hora de Entrega",
+            "Entregado",
           ]}
           orders={
             search === ""

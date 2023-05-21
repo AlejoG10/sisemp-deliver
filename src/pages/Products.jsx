@@ -132,8 +132,9 @@ export default function Products() {
         <CustomTable
           cols={[
             "ID",
+            "ID Proveedor",
             "Imagen",
-            "Producto",
+            "Nombre",
             "Categoría",
             "Precio",
             "Disponibilidad",
