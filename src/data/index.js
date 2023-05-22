@@ -12,7 +12,7 @@ import limpiador from "../images/products/limpiador.png";
 import salsaTomate from "../images/products/salsaTomate.webp";
 import tinto from "../images/products/tinto.webp";
 import colgate from "../images/products/colgate.png";
-import papelHig from "../images/products/papelHig.png";
+import papelHig from "../images/products/papelhig.png";
 import chocolate from "../images/products/chocolate.png";
 import comidaperro from "../images/products/comidaperro.png";
 import limpdesinf from "../images/products/limpdesinf.png";
