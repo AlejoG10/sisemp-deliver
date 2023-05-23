@@ -61,7 +61,9 @@ const getRandom = (min, max) => Math.floor(Math.random() * max) + min;
 const genProveedor = () =>
   PROVEEDORES[Math.floor(Math.random() * PROVEEDORES.length)];
 const genFecha = (start, end) =>
-  new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+  new Date(
+    start.getTime() + Math.random() * (end.getTime() - start.getTime())
+  ).toLocaleDateString();
 const genBool = () => getRandom(0, 11) > 5;
 
 export const LOCAL_PROVEEDORES = [
