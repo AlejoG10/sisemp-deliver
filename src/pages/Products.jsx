@@ -119,12 +119,12 @@ export default function Products() {
               handleClick={gotoDetail}
               icon={<BsFillInfoCircleFill />}
             />
-            <ActionBtn
+            {/* <ActionBtn
               styles="text-red-500"
               tooltip="Eliminar producto"
               handleClick={removeProduct}
               icon={<FaTrash />}
-            />
+            /> */}
           </div>
         </div>
 

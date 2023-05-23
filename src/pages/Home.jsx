@@ -25,10 +25,10 @@ export default function Home() {
           Productos
         </Link>
         <Link
-          to="pedidos"
+          to="solicitudes"
           className="text-orange-500 hover:underline hover:text-orange-500 w-fit"
         >
-          Pedidos
+          Solicitudes
         </Link>
       </div>
     </div>

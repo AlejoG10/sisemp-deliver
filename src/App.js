@@ -33,8 +33,12 @@ function App() {
           path="/productos/:productoId"
           element={<Pages.ProductDetail />}
         />
-        <Route exact path="/pedidos" element={<Pages.Orders />} />
-        <Route exact path="/pedidos/crear" element={<Pages.CreateOrder />} />
+        <Route exact path="/solicitudes" element={<Pages.Orders />} />
+        <Route
+          exact
+          path="/solicitudes/crear"
+          element={<Pages.CreateOrder />}
+        />
       </Routes>
     </Router>
   );

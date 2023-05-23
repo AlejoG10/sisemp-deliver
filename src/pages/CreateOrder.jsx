@@ -60,7 +60,7 @@ export default function CreateOrder() {
     setProducts([]);
     setProductos([]);
     setCantidades([]);
-    setMsg("Pedido creado exitosamente!");
+    setMsg("Solicitud de compra creada exitosamente!");
   };
 
   useEffect(() => {
@@ -85,12 +85,12 @@ export default function CreateOrder() {
             link: "/",
           },
           {
-            name: "pedidos",
-            link: "/pedidos",
+            name: "solicitudes",
+            link: "/solicitudes",
           },
           {
             name: "crear",
-            link: "/pedidos/crear",
+            link: "/solicitudes/crear",
           },
         ]}
       />
@@ -98,12 +98,12 @@ export default function CreateOrder() {
       {/* preview detail */}
       {products.length > 0 && (
         <>
-          <PageTitle title={`Previsualización - Pedido ${proveedor}`} />
+          <PageTitle title={`Previsualización - Solicitud ${proveedor}`} />
           <div className="flex items-center gap-x-10 mb-10 border p-4 rounded-md w-full">
             <div className="flex flex-col gap-x-16 gap-y-7 w-full">
               {/* id */}
               <div className="flex items-center gap-x-3">
-                <h1 className="text-lg font-medium">ID del Pedido:</h1>
+                <h1 className="text-lg font-medium">ID de la Solicitud de Compra:</h1>
                 {orderId}
               </div>
 
@@ -158,7 +158,7 @@ export default function CreateOrder() {
         </>
       )}
 
-      <PageTitle title="Crear Pedido" />
+      <PageTitle title="Crear Solicitud de Compra" />
 
       <div className="flex flex-col gap-y-7 border w-full rounded-md p-4 bg-neutral-50">
         {/* proveedor */}
@@ -269,7 +269,7 @@ export default function CreateOrder() {
             ))
           ) : (
             <h1 className="text-neutral-800">
-              Previsualiza tu pedido agregando productos!
+              Previsualiza tu solicitud de compra agregando productos!
             </h1>
           )}
         </div>
@@ -279,7 +279,7 @@ export default function CreateOrder() {
             className="p-2 bg-orange-500 hover:bg-orange-600 rounded-md text-white mt-4"
             onClick={handleCreate}
           >
-            Crear pedido
+            Crear solicitud de compra
           </button>
           {msg && <p className="text-green-500">{msg}</p>}
         </div>

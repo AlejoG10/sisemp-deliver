@@ -22,27 +22,27 @@ export default function Orders() {
               link: "/",
             },
             {
-              name: "pedidos",
-              link: "/pedidos",
+              name: "solicitudes",
+              link: "/solicitudes",
             },
           ]}
         />
 
-        <PageTitle title="Pedidos" />
+        <PageTitle title="Solicitudes de Compra" />
 
         {/* filters */}
         <div className="flex justify-between items-center mb-4">
           <input
             type="text"
             value={search}
-            placeholder="Buscar un pedido"
+            placeholder="Buscar una solicitud de compra"
             className="w-1/2 p-2 outline-2 outline-orange-500 border rounded-md text-neutral-800"
             onChange={(e) => setSearch(e.target.value)}
           />
           <div className="flex items-center gap-x-5">
             <ActionBtn
               styles="text-green-500"
-              tooltip="Crear un pedido"
+              tooltip="Crear una solicitud"
               handleClick={() => navigate("crear")}
               icon={<BsFillPlusCircleFill />}
             />
@@ -58,7 +58,7 @@ export default function Orders() {
             "Hora de Solicitud",
             "Fecha de Entrega",
             "Hora de Entrega",
-            "Entregado",
+            "Autorizada",
           ]}
           orders={
             search === ""
