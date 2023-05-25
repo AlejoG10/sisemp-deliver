@@ -2,8 +2,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import * as Pages from "./pages";
 import Banner from "./components/Banner";
+import Codes from "./components/Codes";
 import { useEffect } from "react";
-import { LOCAL_PRODUCTS, LOCAL_ORDERS, LOCAL_PROVEEDORES } from "./data";
+import { LOCAL_PRODUCTS, LOCAL_ORDERS, LOCAL_PROVEEDORES, genId } from "./data";
 
 function App() {
   useEffect(() => {
@@ -15,11 +16,19 @@ function App() {
 
     if (!sessionStorage.getItem("orders"))
       sessionStorage.setItem("orders", JSON.stringify(LOCAL_ORDERS));
+
+    if (!sessionStorage.getItem("company_code"))
+      sessionStorage.setItem("company_code", genId().toString());
+
+    if (!sessionStorage.getItem("rec_plant"))
+      sessionStorage.setItem("rec_plant", genId().toString());
   }, []);
 
   return (
     <Router>
       <Banner />
+      <Codes />
+
       <Routes>
         <Route exact index element={<Pages.Home />} />
         <Route exact path="/productos" element={<Pages.Products />} />
